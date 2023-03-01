@@ -67,3 +67,41 @@ document.getElementById("root").innerHTML = categories
     }
   })
   .join("");
+
+  let cart = [];
+
+  const addToCart = (a) =>{
+    cart.push({...categories[a]})
+    displayCart();
+  }
+
+  const delElement = (a) =>{
+    cart.splice(a,1);
+    displayCart();
+  }
+  const displayCart = (a) =>{
+    let j = 0;               
+    let total=0;
+   document.getElementById('count').innerHTML = cart.length; 
+   
+    if(cart.length==0){
+      document.getElementById('cartItem').innerHTML = "Your Cart it empty";
+      document.getElementById('total').innerHTML = "$ "+0+".00"
+    }else{
+      document.getElementById('cartItem').innerHTML = cart.map((items) =>{
+        let {image,title,price} = items;
+        total +=price;
+        document.getElementById('total').innerHTML = "$ " + total;
+        return (
+          `<div class='cart-item'>
+            <div class='row-image'>
+            <img class='rowImg' src=${image}>
+            </div>
+            <p style='font-size:12px;'>${title}</p>
+            <h2 style='font-size:15px;'>$ ${price}.00</h2>` +
+            "<i class='fa-solid fa-trash' onclick='delElement("+ (j++) +")'></i></div>"
+        )
+      }).join('')
+    }
+  }
+  displayCart()
